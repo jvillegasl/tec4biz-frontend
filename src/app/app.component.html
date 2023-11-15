@@ -1,1 +1,96 @@
-<router-outlet></router-outlet>
+<main class="p-8">
+	<form class="mb-6" (ngSubmit)="handleSubmit()">
+		<mat-form-field>
+			<mat-label>Código Cliente</mat-label>
+
+			<input type="text" [formControl]="code" matInput />
+		</mat-form-field>
+
+		<button mat-button color="primary" type="submit" class="ml-4">
+			Search
+		</button>
+	</form>
+
+	<ng-container *ngIf="isFetching; else displayPrimas">
+		<span class="italic text-lg opacity-75"
+			>Buscando Primas...</span
+		></ng-container
+	>
+
+	<ng-template #displayPrimas>
+		<ng-container *ngIf="primas.length === 0; else table">
+			<span class="italic text-lg opacity-75"
+				>No se han encontrado primas. Introduzca un número de cliente
+				válido para buscar.</span
+			>
+		</ng-container>
+	</ng-template>
+
+	<ng-template #table>
+		<div class="overflow-auto max-h-96">
+			<table mat-table [dataSource]="primas">
+				<ng-container matColumnDef="liquidacionPrima">
+					<th mat-header-cell *matHeaderCellDef>
+						Prima de Liquidación
+					</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.liquidacionPrima }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="codigoProducto">
+					<th mat-header-cell *matHeaderCellDef>
+						Código de Producto
+					</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.codigoProducto }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="numeroPoliza">
+					<th mat-header-cell *matHeaderCellDef>Número de Poliza</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.numeroPoliza }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="codigoAsegurado">
+					<th mat-header-cell *matHeaderCellDef>
+						Código de Asegurado
+					</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.codigoAsegurado }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="tipoDocumento">
+					<th mat-header-cell *matHeaderCellDef>Tipo de Documento</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.tipoDocumento }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="tipoRegistro">
+					<th mat-header-cell *matHeaderCellDef>Tipo de Registro</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.tipoRegistro }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="numeroDocumento">
+					<th mat-header-cell *matHeaderCellDef>
+						Número de Documento
+					</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.numeroDocumento }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="codigoCliente">
+					<th mat-header-cell *matHeaderCellDef>Código de Cliente</th>
+					<td mat-cell *matCellDef="let prima">
+						{{ prima.codigoCliente }}
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr
+					mat-row
+					*matRowDef="let row; columns: displayedColumns"
+				></tr>
+			</table>
+		</div>
+	</ng-template>
+</main>
